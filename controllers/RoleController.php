@@ -1,7 +1,8 @@
 <?php
 
-namespace atans\rbac\models;
+namespace atans\rbac\controllers;
 
+use atans\rbac\models\Role;
 use yii\rbac\Item;
 
 class RoleController extends ItemController

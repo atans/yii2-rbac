@@ -1,6 +1,6 @@
 <?php
 
-namespace atans\rbac\models;
+namespace atans\rbac\controllers;
 
 use Yii;
 use yii\rbac\Item;
