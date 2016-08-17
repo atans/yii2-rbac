@@ -2,6 +2,7 @@
 
 namespace atans\rbac\controllers;
 
+use atans\rbac\models\ItemSearch;
 use Yii;
 use yii\rbac\Item;
 use yii\web\Controller;
@@ -33,14 +34,14 @@ abstract class ItemController extends Controller
      * Get item
      *
      * @param $name
-     * @return \yii\rbac\Rule|\yii\rbac\Permission
+     * @return \yii\rbac\Role|\yii\rbac\Permission
      */
     abstract public function getItem($name);
 
 
     public function actionIndex()
     {
-        $model = new ItemSearch($this->type);
+        $model = new ItemSearch($this->getItemType());
 
         return $this->render('index', [
             'filterModel'  => $model,
@@ -52,7 +53,7 @@ abstract class ItemController extends Controller
     {
         /** @var $model \atans\rbac\models\Role|\atans\rbac\models\Permission */
         $model = Yii::createObject([
-            'class'    => $this->modelClass,
+            'class'    => $this->getItemClass(),
             'scenario' => 'create',
         ]);
 
@@ -70,7 +71,7 @@ abstract class ItemController extends Controller
         /** @var $model \atans\rbac\models\Role|\atans\rbac\models\Permission */
         $item  = $this->getItem($name);
         $model = \Yii::createObject([
-            'class'    => $this->modelClass,
+            'class'    => $this->getItemClass(),
             'scenario' => 'update',
             'item'     => $item,
         ]);
