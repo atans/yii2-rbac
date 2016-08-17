@@ -39,6 +39,18 @@ abstract class Item extends Model
      */
     abstract public function createItem($name);
 
+    public function init()
+    {
+        parent::init();
+
+        if ($this->item instanceof \yii\rbac\Item) {
+            $this->name        = $this->item->name;
+            $this->description = $this->item->description;
+            $this->children    = array_keys($this->getAuthManager()->getChildren($this->item->name));
+            $this->rule        = $this->getAuthManager()->getRole($this->item->ruleName);
+        }
+    }
+
     /**
      * @inheritdoc
      */
@@ -192,6 +204,7 @@ abstract class Item extends Model
     public function setAuthManager($authManager)
     {
         $this->authManager = $authManager;
+
         return $this;
     }
 }

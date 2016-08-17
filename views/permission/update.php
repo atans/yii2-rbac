@@ -6,6 +6,7 @@
  */
 
 $this->title = Yii::t('rbac', 'Update permission');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Permissions'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>

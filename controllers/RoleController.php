@@ -4,6 +4,7 @@ namespace atans\rbac\controllers;
 
 use atans\rbac\models\Role;
 use yii\rbac\Item;
+use yii\web\NotFoundHttpException;
 
 class RoleController extends ItemController
 {
@@ -28,6 +29,12 @@ class RoleController extends ItemController
      */
     public function getItem($name)
     {
-        return $this->getAuthManager()->getRole($name);
+        $role = $this->getAuthManager()->getRole($name);
+
+        if ($role instanceof \yii\rbac\Role) {
+            return $role;
+        }
+
+        throw new NotFoundHttpException;
     }
 }

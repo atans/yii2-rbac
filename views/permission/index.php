@@ -12,7 +12,6 @@ use yii\helpers\Url;
 
 $this->title = Yii::t('rbac', 'Permissions');
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
 
 <div class="rbac-permission-index">

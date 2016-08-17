@@ -58,9 +58,9 @@ class ItemSearch extends Model
 
 
         if ($this->load($params) && $this->validate()) {
-            $query->andFilterWhere(['name', 'like', $this->name])
-                ->andFilterWhere(['description', 'like', $this->description])
-                ->andFilterWhere(['rule_name', 'like', $this->rule_name]);
+            $query->andFilterWhere(['like', 'name', $this->name])
+                ->andFilterWhere(['like', 'description', $this->description])
+                ->andFilterWhere(['like', 'rule_name', $this->rule_name]);
         }
 
         $dataProvider->allModels = $query->all($this->getAuthManager()->db);

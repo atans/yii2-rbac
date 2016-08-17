@@ -10,7 +10,10 @@ use yii\helpers\Html;
 
 ?>
 
-<?php $form = ActiveForm::begin() ?>
+<?php $form = ActiveForm::begin([
+    'enableClientValidation' => false,
+    'enableAjaxValidation'   => true,
+]) ?>
 
     <?= $form->field($model, 'name') ?>
 

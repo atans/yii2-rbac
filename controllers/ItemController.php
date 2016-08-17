@@ -4,13 +4,14 @@ namespace atans\rbac\controllers;
 
 use atans\rbac\models\ItemSearch;
 use Yii;
+use yii\web\Response;
 use yii\rbac\Item;
 use yii\web\Controller;
 use yii\rbac\ManagerInterface as AuthManager;
+use yii\widgets\ActiveForm;
 
 abstract class ItemController extends Controller
 {
-
     /**
      * @var AuthManager
      */
@@ -44,7 +45,7 @@ abstract class ItemController extends Controller
         $model = new ItemSearch($this->getItemType());
 
         return $this->render('index', [
-            'filterModel'  => $model,
+            'model'  => $model,
             'dataProvider' => $model->search(Yii::$app->request->get()),
         ]);
     }
@@ -56,6 +57,11 @@ abstract class ItemController extends Controller
             'class'    => $this->getItemClass(),
             'scenario' => 'create',
         ]);
+
+//        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+//            Yii::$app->response->format = Response::FORMAT_JSON;
+//            return ActiveForm::validate($model);
+//        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -70,6 +76,7 @@ abstract class ItemController extends Controller
     {
         /** @var $model \atans\rbac\models\Role|\atans\rbac\models\Permission */
         $item  = $this->getItem($name);
+
         $model = \Yii::createObject([
             'class'    => $this->getItemClass(),
             'scenario' => 'update',
