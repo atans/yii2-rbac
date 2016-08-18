@@ -1,18 +1,28 @@
 <?php
 
 use yii\helpers\Html;
+use atans\rbac\Module;
 
 /**
  * @var $model atans\rbac\models\Role
  * @var $this  yii\web\View
+ * @var $module Module
  */
 
+$module = Module::getInstance();
+
 $this->title = Yii::t('rbac', 'Create role');
-$this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Roles'), 'url' => ['index']];
+
+if ($module->breadcrumbs) {
+    foreach ($module->breadcrumbs as $row) {
+        $this->params['breadcrumbs'][] = $row;
+    }
+}
+
+$this->params['breadcrumbs'][] = ['label' => Yii::t('rbac', 'Roles'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
-
 
 <div class="rbac-role-create">
 

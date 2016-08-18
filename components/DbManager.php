@@ -20,7 +20,7 @@ class DbManager extends BaseDbManager implements ManagerInterface
         }
 
         if ($excludeItems) {
-            $query->andWhere(['not in', 'name' => $excludeItems]);
+            $query->andWhere(['not in', 'name' , $excludeItems]);
         }
 
         $items = [];
@@ -51,5 +51,13 @@ class DbManager extends BaseDbManager implements ManagerInterface
         }
 
         return $roles;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getItem($name)
+    {
+        return parent::getItem($name);
     }
 }

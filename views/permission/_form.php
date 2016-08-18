@@ -7,7 +7,6 @@
 
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-
 ?>
 
 <?php $form = ActiveForm::begin([
@@ -21,6 +20,8 @@ use yii\helpers\Html;
 
     <?= $form->field($model, 'rule') ?>
 
-    <?= Html::submitButton(Yii::t('rbac', 'Save'), ['class' => 'btn btn-success']) ?>
+    <?= $form->field($model, 'children')->checkboxList($model->getUnassignedItems()) ?>
+
+    <?= Html::submitButton(Yii::t('rbac', 'Submit'), ['class' => 'btn btn-success']) ?>
 
 <?php ActiveForm::end() ?>

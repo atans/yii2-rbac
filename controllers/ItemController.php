@@ -2,18 +2,18 @@
 
 namespace atans\rbac\controllers;
 
+use atans\rbac\components\ManagerInterface;
 use atans\rbac\models\ItemSearch;
 use Yii;
 use yii\web\Response;
 use yii\rbac\Item;
 use yii\web\Controller;
-use yii\rbac\ManagerInterface as AuthManager;
 use yii\widgets\ActiveForm;
 
 abstract class ItemController extends Controller
 {
     /**
-     * @var AuthManager
+     * @var ManagerInterface
      */
     protected $authManager;
 
@@ -58,10 +58,10 @@ abstract class ItemController extends Controller
             'scenario' => 'create',
         ]);
 
-//        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-//            Yii::$app->response->format = Response::FORMAT_JSON;
-//            return ActiveForm::validate($model);
-//        }
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
@@ -112,11 +112,11 @@ abstract class ItemController extends Controller
     /**
      * Get authManager
      *
-     * @return AuthManager
+     * @return ManagerInterface
      */
     public function getAuthManager()
     {
-        if (! $this->authManager instanceof AuthManager) {
+        if (! $this->authManager instanceof ManagerInterface) {
             $this->setAuthManager(Yii::$app->authManager);
         }
 
@@ -126,10 +126,10 @@ abstract class ItemController extends Controller
     /**
      * Set authManager
      *
-     * @param  AuthManager $authManager
+     * @param  ManagerInterface $authManager
      * @return $this
      */
-    public function setAuthManager(AuthManager $authManager)
+    public function setAuthManager(ManagerInterface $authManager)
     {
         $this->authManager = $authManager;
         return $this;

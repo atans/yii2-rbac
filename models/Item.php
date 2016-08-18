@@ -7,7 +7,8 @@ use atans\rbac\validators\ChildrenValidator;
 use ReflectionClass;
 use Yii;
 use yii\base\Model;
-use yii\rbac\ManagerInterface;
+use atans\rbac\components\ManagerInterface;
+use yii\rbac\Rule;
 
 abstract class Item extends Model
 {
@@ -22,7 +23,7 @@ abstract class Item extends Model
     public $item;
 
     /**
-     * @var ManagerInterface|\yii\rbac\DbManager
+     * @var ManagerInterface
      */
     protected $authManager;
 
@@ -47,7 +48,11 @@ abstract class Item extends Model
             $this->name        = $this->item->name;
             $this->description = $this->item->description;
             $this->children    = array_keys($this->getAuthManager()->getChildren($this->item->name));
-            $this->rule        = $this->getAuthManager()->getRole($this->item->ruleName);
+
+            $rule = $this->getAuthManager()->getRole($this->item->ruleName);
+            if ($rule instanceof Rule) {
+                $this->rule = $rule::className();
+            }
         }
     }
 
@@ -64,7 +69,7 @@ abstract class Item extends Model
             ['name', 'match', 'pattern' => $module->itemNamePattern],
             [['name', 'description', 'rule'], 'trim'],
             ['name', function () {
-                if (empty($this->getAuthManager()->getItem($this->name))) {
+                if (! is_null($this->getAuthManager()->getItem($this->name))) {
                     $this->addError('name', Yii::t('rbac', 'Item name already exists'));
                 }
             }, 'when' => function () {
@@ -76,7 +81,6 @@ abstract class Item extends Model
                     $class = new ReflectionClass($this->rule);
                 } catch (\Exception $e) {
                     $this->addError('rule', Yii::t('rbac', 'Rule class "{0}" does not exist', $this->rule));
-
                     return;
                 }
 
@@ -128,8 +132,8 @@ abstract class Item extends Model
 
         $authManager = $this->getAuthManager();
 
-        $isNewItem = $this->item === null;
-        $oldName   = $this->item->name;
+        $isNewItem = is_null($this->item);
+        $oldName   = $isNewItem ? null : $this->item->name ;
         if ($isNewItem) {
             $this->item = $this->createItem($this->name);
         }
@@ -184,7 +188,7 @@ abstract class Item extends Model
     /**
      * Get authManager
      *
-     * @return ManagerInterface|\yii\rbac\DbManager
+     * @return ManagerInterface
      */
     public function getAuthManager()
     {
@@ -198,13 +202,12 @@ abstract class Item extends Model
     /**
      * Set authManager
      *
-     * @param  ManagerInterface|\yii\rbac\DbManager $authManager
+     * @param  ManagerInterface $authManager
      * @return $this
      */
     public function setAuthManager($authManager)
     {
         $this->authManager = $authManager;
-
         return $this;
     }
 }

@@ -22,4 +22,12 @@ interface ManagerInterface extends BaseManagerInterface
      * @return array
      */
     public function getItemsByUser($userId);
+
+    /**
+     * Get item
+     *
+     * @param  string $name
+     * @return \yii\rbac\Item
+     */
+    public function getItem($name);
 }

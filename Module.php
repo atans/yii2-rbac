@@ -4,8 +4,6 @@ namespace atans\rbac;
 
 use atans\rbac\components\DbManager;
 use Yii;
-use yii\base\Application;
-use yii\rbac\ManagerInterface;
 
 /**
  * rbac module definition class
@@ -13,10 +11,22 @@ use yii\rbac\ManagerInterface;
 class Module extends \yii\base\Module
 {
     /**
+     * [
+     *   ['label' => 'User management', 'url' => ['user/index']]
+     * ]
+     *
+     * @var array
+     */
+    public $breadcrumbs = [];
+
+    /**
      * @inheritdoc
      */
     public $controllerNamespace = 'atans\rbac\controllers';
 
+    /**
+     * @var string
+     */
     public $itemNamePattern = '/^[\w][\w-.:]+[\w]$/';
 
 
@@ -26,20 +36,5 @@ class Module extends \yii\base\Module
     public function init()
     {
         parent::init();
-
-        $app = Yii::$app;
-
-
-
-
- ///       if ($this->isRbacModuleInstalled($app)) {
-//            if (! $app->authManager instanceof ManagerInterface) {
-//                $app->set('authManager', [
-//                    'class' => DbManager::className(),
-//                ]);
-//            }
-        }
- //   }
-
-
+    }
 }

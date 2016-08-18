@@ -4,13 +4,13 @@ namespace atans\rbac\validators;
 
 use Yii;
 use yii\rbac\Item;
-use yii\rbac\ManagerInterface;
+use atans\rbac\components\ManagerInterface;
 use yii\validators\Validator;
 
 class ChildrenValidator extends Validator
 {
     /**
-     * @var ManagerInterface|\yii\rbac\DbManager
+     * @var ManagerInterface
      */
     protected $authManager;
 
@@ -27,7 +27,7 @@ class ChildrenValidator extends Validator
 
         foreach ($value as $name) {
             if (! $authManager->getItem($name) instanceof Item) {
-                return [Yii::t('rbac', 'Item "{0}" does not exits', [$name]), []];
+                return [Yii::t('rbac', 'Item "{0}" does not exist', [$name]), []];
             }
         }
     }
@@ -35,7 +35,7 @@ class ChildrenValidator extends Validator
     /**
      * Get authManager
      *
-     * @return ManagerInterface|\yii\rbac\DbManager
+     * @return ManagerInterface
      */
     public function getAuthManager()
     {
@@ -48,7 +48,7 @@ class ChildrenValidator extends Validator
     /**
      * Set authManager
      *
-     * @param  ManagerInterface|\yii\rbac\DbManager $authManager
+     * @param  ManagerInterface $authManager
      * @return $this
      */
     public function setAuthManager(ManagerInterface $authManager)

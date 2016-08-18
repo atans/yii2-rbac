@@ -1,18 +1,29 @@
 <?php
 
 use yii\helpers\Html;
+use atans\rbac\Module;
 
 /**
  * @var $dataProvider array
+ * @var $this         yii\web\View
  * @var $model  atans\rbac\models\ItemSearch
- * @var $this   yii\web\View
+ * @var $module Module
  */
+
+$module = Module::getInstance();
 
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\helpers\Url;
 
 $this->title = Yii::t('rbac', 'Roles');
+
+if ($module->breadcrumbs) {
+    foreach ($module->breadcrumbs as $row) {
+        $this->params['breadcrumbs'][] = $row;
+    }
+}
+
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -22,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h3><?= Html::encode($this->title) ?></h3>
 
     <p>
-        <?= Html::a(Yii::t('app', 'Create role'), ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(Yii::t('rbac', 'Create role'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?= GridView::widget([
@@ -52,8 +63,8 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
             ],
             [
-                'header'    => Yii::t('rbac', 'Actions'),
                 'class'      => ActionColumn::className(),
+                'header'    => Yii::t('rbac', 'Actions'),
                 'template'   => '{update} {delete}',
                 'urlCreator' => function ($action, $model) {
                     return Url::to(['/rbac/role/' . $action, 'name' => $model['name']]);
