@@ -83,6 +83,11 @@ abstract class ItemController extends Controller
             'item'     => $item,
         ]);
 
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
         if ($model->load(\Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['index']);
         }
