@@ -4,6 +4,7 @@ namespace atans\rbac;
 
 use atans\rbac\components\DbManager;
 use Yii;
+use yii\filters\AccessControl;
 
 /**
  * rbac module definition class
@@ -27,14 +28,40 @@ class Module extends \yii\base\Module
     /**
      * @var string
      */
-    public $itemNamePattern = '/^[\w][\w-.:]+[\w]$/';
+    public $itemNamePattern = '/^[\w][\w-.:\/]+[\w]$/';
 
+    /**
+     * @var array
+     */
+    public $admins = [];
+
+    /**
+     * @var array
+     */
+    public $adminPermission = [];
 
     /**
      * @inheritdoc
      */
-    public function init()
+    public function behaviors()
     {
-        parent::init();
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function () {
+                            $app = Yii::$app;
+                            $user = Yii::$app->user->identity;
+
+                            return ($app->authManager && $this->adminPermission  ? $app->user->can($this->adminPermission) : false) || in_array($user->username, $this->admins);
+                        },
+                    ],
+                ],
+            ],
+        ];
     }
+
 }
