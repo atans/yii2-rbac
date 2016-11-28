@@ -2,7 +2,7 @@
 
 namespace atans\rbac\widgets;
 
-use atnas\rbac\models\Assignment;
+use atans\rbac\models\Assignment;
 use Yii;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
@@ -33,7 +33,7 @@ class Assignments extends Widget
     {
         /* @var $model Assignment */
         $model = Yii::createObject([
-            Assignment::className(),
+            'class' => Assignment::className(),
             'user_id' => $this->user_id
         ]);
 

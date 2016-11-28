@@ -1,6 +1,6 @@
 <?php
 
-namespace atnas\rbac\models;
+namespace atans\rbac\models;
 
 use atans\rbac\validators\ChildrenValidator;
 use Yii;
