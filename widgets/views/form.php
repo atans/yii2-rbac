@@ -31,13 +31,7 @@ use yii\widgets\ActiveForm;
 
 <?= Html::activeHiddenInput($model, 'user_id') ?>
 
-<?= $form->field($model, 'items')->widget(Select2::className(), [
-    'data' => $model->getAvailableItems(),
-    'options' => [
-        'id' => 'items',
-        'multiple' => true
-    ],
-]) ?>
+<?= $form->field($model, 'items')->checkboxList($model->getAvailableItems()) ?>
 
 <?= Html::submitButton(Yii::t('rbac', 'Submit'), ['class' => 'btn btn-primary']) ?>
 
