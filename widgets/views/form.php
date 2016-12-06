@@ -1,13 +1,12 @@
 <?php
 
-
 use atans\rbac\models\Assignment;
-use kartik\select2\Select2;
 use yii\bootstrap\Alert;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /**
+ * @var $this  yii\web\View
  * @var $model Assignment
  */
 
