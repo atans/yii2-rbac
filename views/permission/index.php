@@ -28,12 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="rbac-permission-index">
-    <h3><?= Html::encode($this->title) ?></h3>
-
     <p>
         <?= Html::a(Yii::t('rbac', 'Create permission'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <?= $this->render('/_menu') ?>
+    <div class="box">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel'  => $model,
@@ -70,5 +70,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ],
     ]) ?>
+    </div>
 
 </div>

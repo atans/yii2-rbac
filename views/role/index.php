@@ -30,12 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="rbac-role-create">
 
-    <h3><?= Html::encode($this->title) ?></h3>
-
     <p>
         <?= Html::a(Yii::t('rbac', 'Create role'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
+    <?= $this->render('/_menu') ?>
+    <div class="box">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel'  => $model,
@@ -72,5 +72,6 @@ $this->params['breadcrumbs'][] = $this->title;
             ]
         ],
     ]) ?>
+    </div>
 
 </div>
