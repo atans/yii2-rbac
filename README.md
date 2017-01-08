@@ -1,9 +1,10 @@
-Yii2 RBAC Extension
-===================
+# Yii2 RBAC Extension
+
 An RBAC extension for yii2
 
-Installation
-------------
+# Installation
+
+## Step 1
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
@@ -21,6 +22,14 @@ or add
 
 to the require section of your `composer.json` file.
 
+
+## Step 3
+
+Update database schema
+
+```
+$ php yii migrate/up --migrationPath=@yii/rbac/migrations
+```
 
 Usage
 -----
